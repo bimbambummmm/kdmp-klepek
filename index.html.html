@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDMP Klepek - Koperasi Desa Merah Putih Kunjang Kediri</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kdmp: {
+                            red: '#B91C1C',
+                            darkred: '#7F1D1D',
+                            lightred: '#FEF2F2',
+                            gold: '#D97706',
+                            goldlight: '#FEF3C7',
+                            green: '#059669',
+                            dark: '#0F172A',
+                            slate: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-hero {
+            background: linear-gradient(135deg, #7F1D1D 0%, #B91C1C 60%, #991B1B 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-kdmp-darkred text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-amber-400 text-slate-900 animate-pulse">
+            <i data-lucide="zap" class="w-3 h-3 mr-1"></i> Program Strategis Nasional
+        </span>
+        <span>Sinergi PT Agrinas Pangan Nusantara & Kementerian Koperasi RI di Desa Klepek, Kec. Kunjang</span>
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 sm:h-20 items-center">
+                
+                <!-- Brand / Logo -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-kdmp-red text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+                        <i data-lucide="shield-check" class="w-6 h-6 sm:w-7 sm:h-7 text-amber-300"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900">KDMP KLEPEK</span>
+                            <span class="text-[10px] font-bold bg-red-100 text-kdmp-red px-1.5 py-0.5 rounded">KUNJANG</span>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium hidden sm:block">Koperasi Desa Merah Putih • Kab. Kediri</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold text-slate-700">
+                    <a href="#visi-misi" class="hover:text-kdmp-red transition-colors">Visi & Gagasan</a>
+                    <a href="#dashboard" class="hover:text-kdmp-red transition-colors">Dashboard Progres</a>
+                    <a href="#roadmap" class="hover:text-kdmp-red transition-colors">Roadmap Hari Ini</a>
+                    <a href="#kalkulator" class="hover:text-kdmp-red transition-colors">Kalkulator SHU</a>
+                    <a href="#aspirasi" class="hover:text-kdmp-red transition-colors">Aspirasi Warga</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden sm:flex items-center space-x-3">
+                    <a href="#pendaftaran" class="px-4 py-2.5 rounded-lg bg-kdmp-red hover:bg-kdmp-darkred text-white text-sm font-semibold shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        <span>Daftar Anggota</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex lg:hidden items-center">
+                    <button id="mobile-menu-btn" class="p-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-2 shadow-lg">
+            <a href="#visi-misi" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">Visi & Gagasan</a>
+            <a href="#dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">Dashboard Progres</a>
+            <a href="#roadmap" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">Roadmap Hari Ini</a>
+            <a href="#kalkulator" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">Kalkulator SHU</a>
+            <a href="#aspirasi" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">Aspirasi Warga</a>
+            <a href="#pendaftaran" class="block w-full text-center px-4 py-2.5 rounded-md bg-kdmp-red text-white font-semibold shadow">Daftar Anggota</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="gradient-hero text-white relative overflow-hidden py-16 sm:py-24">
+        <!-- Abstract Background Overlay Pattern -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium text-amber-300">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-amber-400"></i>
+                        <span>Desa Klepek, Kecamatan Kunjang, Kabupaten Kediri</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Koperasi Desa Merah Putih <br class="hidden sm:inline">
+                        <span class="text-amber-300">(KDMP) Klepek</span>
+                    </h1>
+
+                    <p class="text-base sm:text-xl text-red-100 font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Wadah gotong royong terpadu untuk membangun kemandirian ekonomi desa, hilirisasi pertanian, serta ketahanan pangan nasional berkelanjutan bersama PT Agrinas Pangan Nusantara.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#dashboard" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-center shadow-lg transition-transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <span>Jelajahi Progres & Roadmap</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#pendaftaran" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-center backdrop-blur transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                            <span>Gabung Anggota KDMP</span>
+                        </a>
+                    </div>
+
+                    <!-- Highlights Stat Badges -->
+                    <div class="pt-6 grid grid-cols-3 gap-3 border-t border-white/10 max-w-xl mx-auto lg:mx-0 text-center">
+                        <div class="bg-black/20 backdrop-blur rounded-lg p-2.5">
+                            <p class="text-xs text-red-200">Legalitas Desa</p>
+                            <p class="text-lg font-extrabold text-white">100% Sah</p>
+                        </div>
+                        <div class="bg-black/20 backdrop-blur rounded-lg p-2.5">
+                            <p class="text-xs text-red-200">Pendampingan</p>
+                            <p class="text-lg font-extrabold text-amber-300">Agrinas & Kemenkop</p>
+                        </div>
+                        <div class="bg-black/20 backdrop-blur rounded-lg p-2.5">
+                            <p class="text-xs text-red-200">Fase Operasional</p>
+                            <p class="text-lg font-extrabold text-emerald-300">Q4 2026</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Interactive Snapshot Card -->
+                <div class="lg:col-span-5">
+                    <div class="glass-card rounded-2xl p-6 shadow-2xl border border-white/40 text-slate-800 space-y-5">
+                        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+                            <div>
+                                <h3 class="font-extrabold text-slate-900">Status Terkini KDMP Klepek</h3>
+                                <p class="text-xs text-slate-500">Update berkala per November 2026</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Aktif Berjalan
+                            </span>
+                        </div>
+
+                        <div class="space-y-4 text-sm">
+                            <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                <span class="text-slate-600 font-medium">Musdesus & Badan Hukum</span>
+                                <span class="font-bold text-emerald-600 flex items-center gap-1">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i> Selesai
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                <span class="text-slate-600 font-medium">Sertifikasi Manajer KDMP</span>
+                                <span class="font-bold text-emerald-600 flex items-center gap-1">
+                                    <i data-lucide="shield-check" class="w-4 h-4"></i> Terverifikasi
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                <span class="text-slate-600 font-medium">Survei Lahan & Potensi Komoditas</span>
+                                <span class="font-bold text-amber-600">85% Terdata</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                <span class="text-slate-600 font-medium">Lokasi Gudang & Gerai Usaha</span>
+                                <span class="font-bold text-kdmp-red">Penyiapan Fisik</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-red-50 border border-red-100 rounded-xl p-4 text-xs text-kdmp-darkred space-y-1">
+                            <p class="font-bold flex items-center gap-1">
+                                <i data-lucide="info" class="w-4 h-4 text-kdmp-red"></i> Catatan Manajemen KDMP:
+                            </p>
+                            <p>Desa Klepek bersiap menjadi percontohan integrasi serap gabah & logistik pangan di Wilayah Kecamatan Kunjang Kediri.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 2: VISI, MISI & GAGASAN UTAMA (IDE & PANDANGAN) -->
+    <section id="visi-misi" class="py-16 sm:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-kdmp-red bg-red-50 px-3 py-1 rounded-full border border-red-100">
+                    Fondasi Strategis
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">
+                    Ide, Pandangan & Pilar Transformasi Ekonomi Klepek
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    KDMP Klepek bukan sekadar lembaga keuangan desa, melainkan motor penggerak ekosistem agribisnis dari hulu ke hilir untuk memutus mata rantai tengkulak dan meningkatkan kesejahteraan petani.
+                </p>
+            </div>
+
+            <!-- Core Idea Card -->
+            <div class="bg-gradient-to-r from-red-900 to-kdmp-red text-white rounded-2xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="inline-flex items-center gap-2 bg-amber-400 text-slate-900 font-bold text-xs px-3 py-1 rounded-md">
+                            <i data-lucide="lightbulb" class="w-4 h-4"></i> Gagasan Inti
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold">Konsolidasi Hasil Tani & Digitalisasi Rantai Pasok Desa</h3>
+                        <p class="text-red-100 text-sm sm:text-base leading-relaxed">
+                            Melalui kemitraan strategis dengan **PT Agrinas Pangan Nusantara**, KDMP Klepek bertindak sebagai pengumpul utama (offtaker) hasil pertanian lokal (gabah, jagung, hortikultura), menyediakan Sarana Produksi Pertanian (Saprotan) bermutu dengan harga bersaing, serta menjamin keadilan pembiayaan mikro modal kerja bagi para petani Klepek.
+                        </p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur p-6 rounded-xl border border-white/20 text-center space-y-3">
+                        <i data-lucide="trending-up" class="w-10 h-10 text-amber-300 mx-auto"></i>
+                        <h4 class="font-bold text-lg">Target Outcome</h4>
+                        <p class="text-xs text-red-100">Peningkatan Nilai Tukar Petani (NTP) Klepek hingga 25% dan kepastian harga pasar gabah terjamin.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 PILAR STRATEGIS INTERAKTIF -->
+            <div class="space-y-6">
+                <h3 class="text-xl font-bold text-slate-900 text-center sm:text-left flex items-center justify-center sm:justify-start gap-2">
+                    <i data-lucide="layout-grid" class="w-5 h-5 text-kdmp-red"></i>
+                    <span>4 Pilar Usaha Strategis KDMP Klepek</span>
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Pilar 1 -->
+                    <div class="bg-slate-50 hover:bg-red-50/50 border border-slate-200 hover:border-red-200 rounded-xl p-6 transition-all duration-300 group shadow-sm hover:shadow-md">
+                        <div class="w-12 h-12 rounded-lg bg-red-100 text-kdmp-red flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="warehouse" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400">PILAR 01</span>
+                        <h4 class="text-lg font-bold text-slate-900 mt-1 mb-2">Sentra Logistik & Serap Gabah</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Penampungan hasil panen warga Klepek secara langsung dengan timbangan adil, pembayaran cepat, dan kepastian standardisasi kualitas bersama Agrinas.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 2 -->
+                    <div class="bg-slate-50 hover:bg-red-50/50 border border-slate-200 hover:border-red-200 rounded-xl p-6 transition-all duration-300 group shadow-sm hover:shadow-md">
+                        <div class="w-12 h-12 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400">PILAR 02</span>
+                        <h4 class="text-lg font-bold text-slate-900 mt-1 mb-2">Gerai Sembako & Saprotan Murah</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Penyediaan pupuk, bibit unggul, obat pertanian, serta barang kebutuhan pokok keluarga desa dengan harga subsidi/grosir untuk anggota.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 3 -->
+                    <div class="bg-slate-50 hover:bg-red-50/50 border border-slate-200 hover:border-red-200 rounded-xl p-6 transition-all duration-300 group shadow-sm hover:shadow-md">
+                        <div class="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="coins" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400">PILAR 03</span>
+                        <h4 class="text-lg font-bold text-slate-900 mt-1 mb-2">Simpan Pinjam & Pembiayaan</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Layanan keuangan syariah/modal kerja musiman ramah petani tanpa jeratan bunga menjerat, aman terverifikasi regulasi Koperasi.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 4 -->
+                    <div class="bg-slate-50 hover:bg-red-50/50 border border-slate-200 hover:border-red-200 rounded-xl p-6 transition-all duration-300 group shadow-sm hover:shadow-md">
+                        <div class="w-12 h-12 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-slate-400">PILAR 04</span>
+                        <h4 class="text-lg font-bold text-slate-900 mt-1 mb-2">Inkubasi UMKM & Edukasi Tani</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Pelatihan pengolahan produk turunan pangan, modernisasi metode tanam presisi, serta pengemasan produk unggulan warga Klepek.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 3: DASHBOARD PROGRES & CAPAIAN TERKINI -->
+    <section id="dashboard" class="py-16 sm:py-24 bg-slate-100 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">
+                        Live Executive Dashboard
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-2">
+                        Capaian & Progres Realisasi (Nov 2026)
+                    </h2>
+                    <p class="text-slate-600 text-sm sm:text-base">
+                        Pantauan transparan perkembangan pembentukan dan operasional KDMP Klepek, Kunjang Kediri.
+                    </p>
+                </div>
+                <div class="bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-200 text-xs font-semibold text-slate-600 flex items-center gap-2 self-start md:self-auto">
+                    <i data-lucide="clock" class="w-4 h-4 text-kdmp-red"></i>
+                    <span>Pembaruan Terakhir: 12 November 2026</span>
+                </div>
+            </div>
+
+            <!-- KPI Metric Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- KPI 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+                            <i data-lucide="file-check" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">100% Selesai</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-slate-500">Status Kelembagaan</p>
+                        <h3 class="text-2xl font-extrabold text-slate-900">Legalitas Resmi</h3>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-emerald-500 h-full w-full"></div>
+                    </div>
+                    <p class="text-xs text-slate-500">Badan Hukum & Akta Notaris Terverifikasi Kemenkop</p>
+                </div>
+
+                <!-- KPI 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                            <i data-lucide="user-check" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">BNSP Certified</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-slate-500">SDM & Manajemen</p>
+                        <h3 class="text-2xl font-extrabold text-slate-900">Manajer KDKMP</h3>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-blue-500 h-full w-[100%]"></div>
+                    </div>
+                    <p class="text-xs text-slate-500">Penempatan Pengelola Profesional Siap Bertugas</p>
+                </div>
+
+                <!-- KPI 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div class="p-2 bg-amber-50 rounded-lg text-amber-600">
+                            <i data-lucide="map" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">85% Selesai</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-slate-500">Pemetaan Potensi Desa</p>
+                        <h3 class="text-2xl font-extrabold text-slate-900">320 Ha Lahan</h3>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-amber-500 h-full w-[85%]"></div>
+                    </div>
+                    <p class="text-xs text-slate-500">Pendataan Komoditas Padi & Sektor Hortikultura</p>
+                </div>
+
+                <!-- KPI 4 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div class="p-2 bg-red-50 rounded-lg text-kdmp-red">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-kdmp-red bg-red-100 px-2 py-0.5 rounded">Gelombang 1</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-slate-500">Target Anggota Awal</p>
+                        <h3 class="text-2xl font-extrabold text-slate-900">250 KK Warga</h3>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-kdmp-red h-full w-[65%]"></div>
+                    </div>
+                    <p class="text-xs text-slate-500">Pendaftaran Buka Terbuka Bagi Seluruh Warga Klepek</p>
+                </div>
+
+            </div>
+
+            <!-- Interactive Visual Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Bar Chart: Division Progress -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-kdmp-red"></i>
+                            <span>Tingkat Kesiapan Divisi Operasional (%)</span>
+                        </h3>
+                        <span class="text-xs text-slate-400">Target Q4 2026</span>
+                    </div>
+                    <div class="h-64 sm:h-72 w-full relative">
+                        <canvas id="divisionProgressChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Donut Chart: Target Offtaker & Commodity Share -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                            <i data-lucide="pie-chart" class="w-5 h-5 text-amber-600"></i>
+                            <span>Fokus Komoditas Utama Klepek</span>
+                        </h3>
+                    </div>
+                    <div class="h-64 sm:h-72 w-full relative flex items-center justify-center">
+                        <canvas id="commodityChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 4: TIMELINE LANGKAH-LANGKAH & ROADMAP HARI INI -->
+    <section id="roadmap" class="py-16 sm:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-kdmp-red bg-red-50 px-3 py-1 rounded-full border border-red-100">
+                    Rekam Jjejak & Masa Depan
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">
+                    Langkah-Langkah Perkembangan sampai Hari Ini
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Perjalanan sistematis KDMP Klepek dari inisiasi awal hingga persiapan operasional komersial.
+                </p>
+            </div>
+
+            <!-- Timeline Component -->
+            <div class="relative border-l-2 border-red-200 ml-4 sm:ml-32 space-y-12 py-4">
+                
+                <!-- TAHAP 1 -->
+                <div class="relative pl-6 sm:pl-8 group">
+                    <!-- Date badge desktop -->
+                    <div class="hidden sm:block absolute -left-32 top-1 text-right w-24 text-xs font-extrabold text-slate-400">
+                        Fase 1 <br><span class="text-slate-600">Awal 2026</span>
+                    </div>
+                    <!-- Node Bullet -->
+                    <div class="absolute -left-[17px] top-1 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center ring-4 ring-white shadow">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h3 class="text-lg font-bold text-slate-900">Tahap 1: Inisiasi, Musdesus & Badan Hukum</h3>
+                            <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700">SELESAI 100%</span>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Penyelenggaraan Musyawarah Desa Khusus (Musdesus) Klepek bersama Perangkat Desa, Tokoh Tani, dan Perwakilan Kementerian Koperasi. Disepakati pembentukan KDMP Klepek dan pengesahan Akta Notaris Badan Hukum.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TAHAP 2 -->
+                <div class="relative pl-6 sm:pl-8 group">
+                    <div class="hidden sm:block absolute -left-32 top-1 text-right w-24 text-xs font-extrabold text-slate-400">
+                        Fase 2 <br><span class="text-slate-600">Mid 2026</span>
+                    </div>
+                    <div class="absolute -left-[17px] top-1 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center ring-4 ring-white shadow">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h3 class="text-lg font-bold text-slate-900">Tahap 2: Manajemen Profesional & Sertifikasi BNSP</h3>
+                            <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700">SELESAI 100%</span>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Seleksi dan penempatan Manajer KDKMP tersertifikasi standar BNSP, didukung penyusunan Standard Operating Procedure (SOP) tata kelola keuangan modern, transparan, dan akuntabel.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TAHAP 3 (FASE SAAT INI) -->
+                <div class="relative pl-6 sm:pl-8 group">
+                    <div class="hidden sm:block absolute -left-32 top-1 text-right w-24 text-xs font-extrabold text-kdmp-red">
+                        Fase 3 <br><span class="text-kdmp-red font-bold">Saat Ini (Q4 2026)</span>
+                    </div>
+                    <div class="absolute -left-[17px] top-1 w-8 h-8 rounded-full bg-kdmp-red text-white flex items-center justify-center ring-4 ring-red-100 shadow animate-bounce">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <div class="bg-red-50/60 border-2 border-kdmp-red/40 rounded-xl p-5 shadow-md space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h3 class="text-lg font-bold text-kdmp-darkred">Tahap 3: Pendataan Potensi, Penyiapan Gerai & Agrinas Sync</h3>
+                            <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-amber-400 text-slate-900 animate-pulse">BERJALAN SEKARANG</span>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            Survei lapangan kepemilikan lahan pertanian warga Klepek, penyiapan lokasi fisik gudang serap gabah & gerai saprotan murah, serta integrasi rantai pasok dengan PT Agrinas Pangan Nusantara. Pendaftaran anggota perdana dibuka resmi.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-red-200 text-xs text-slate-600 space-y-1">
+                            <div class="flex justify-between font-semibold">
+                                <span>Progres Fase Saat Ini:</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                <div class="bg-kdmp-red h-full w-[82%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAHAP 4 -->
+                <div class="relative pl-6 sm:pl-8 group">
+                    <div class="hidden sm:block absolute -left-32 top-1 text-right w-24 text-xs font-extrabold text-slate-400">
+                        Fase 4 <br><span class="text-slate-600">Target Q1 2027</span>
+                    </div>
+                    <div class="absolute -left-[17px] top-1 w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center ring-4 ring-white shadow">
+                        <i data-lucide="flag" class="w-4 h-4"></i>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm space-y-2 opacity-80">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h3 class="text-lg font-bold text-slate-800">Tahap 4: Operasional Penuh Unit Usaha & Digital App</h3>
+                            <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-slate-200 text-slate-700">MENDATANG</span>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Grand Opening Gerai Sembako & Saprotan Murah, operasional unit Simpan Pinjam Produktif, peluncuran aplikasi mobile pembukuan real-time anggota, serta distribusi SHU perdana.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 5: SIMULASI MANFAAT ANGGOTA & KALKULATOR SHU INTERAKTIF -->
+    <section id="kalkulator" class="py-16 sm:py-24 bg-gradient-to-b from-slate-900 to-kdmp-darkred text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-amber-300 bg-amber-400/20 px-3 py-1 rounded-full border border-amber-400/30">
+                    Transparansi Nilai Ekonomi
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white">
+                    Simulasi Estimasi SHU (Sisa Hasil Usaha) Anggota
+                </h2>
+                <p class="text-red-200 text-sm sm:text-base">
+                    Makin aktif Anda bertransaksi dan menyimpan di KDMP Klepek, makin besar manfaat ekonomi yang kembali kepada Anda setiap akhir tahun anggaran.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Sliders Control Card -->
+                <div class="lg:col-span-7 bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 space-y-6">
+                    
+                    <!-- Slider 1: Simpanan Wajib Bulanan -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-sm">
+                            <label class="font-medium text-red-100 flex items-center gap-1.5">
+                                <i data-lucide="piggy-bank" class="w-4 h-4 text-amber-300"></i> Simpanan Wajib Bulanan:
+                            </label>
+                            <span id="val-simpanan-wajib" class="font-bold text-amber-300 text-base">Rp 50.000 / bln</span>
+                        </div>
+                        <input type="range" id="input-simpanan-wajib" min="20000" max="300000" step="10000" value="50000" 
+                            class="w-full h-2.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-amber-400">
+                        <div class="flex justify-between text-[11px] text-red-200">
+                            <span>Rp 20.000</span>
+                            <span>Rp 150.000</span>
+                            <span>Rp 300.000</span>
+                        </div>
+                    </div>
+
+                    <!-- Slider 2: Belanja Sembako/Saprotan Bulanan -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-sm">
+                            <label class="font-medium text-red-100 flex items-center gap-1.5">
+                                <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-300"></i> Transaksi Belanja di Gerai KDMP:
+                            </label>
+                            <span id="val-belanja" class="font-bold text-amber-300 text-base">Rp 500.000 / bln</span>
+                        </div>
+                        <input type="range" id="input-belanja" min="100000" max="3000000" step="50000" value="500000" 
+                            class="w-full h-2.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-amber-400">
+                        <div class="flex justify-between text-[11px] text-red-200">
+                            <span>Rp 100.000</span>
+                            <span>Rp 1.500.000</span>
+                            <span>Rp 3.000.000</span>
+                        </div>
+                    </div>
+
+                    <!-- Slider 3: Penjualan Gabah/Hasil Tani ke KDMP -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-sm">
+                            <label class="font-medium text-red-100 flex items-center gap-1.5">
+                                <i data-lucide="wheat" class="w-4 h-4 text-amber-300"></i> Penjualan Gabah / Hasil Tani per Tahun:
+                            </label>
+                            <span id="val-hasil-tani" class="font-bold text-amber-300 text-base">Rp 15.000.000 / thn</span>
+                        </div>
+                        <input type="range" id="input-hasil-tani" min="0" max="100000000" step="1000000" value="15000000" 
+                            class="w-full h-2.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-amber-400">
+                        <div class="flex justify-between text-[11px] text-red-200">
+                            <span>Rp 0 (Bukan Petani)</span>
+                            <span>Rp 50 Jt</span>
+                            <span>Rp 100 Jt</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 text-xs text-red-200 border-t border-white/10 flex items-center gap-2">
+                        <i data-lucide="calculator" class="w-4 h-4 text-amber-300 flex-shrink-0"></i>
+                        <span>Rumus menggunakan alokasi SHU standar UU Koperasi (Jasa Modal 25% + Jasa Usaha & Transaksi 45%).</span>
+                    </div>
+
+                </div>
+
+                <!-- Simulation Result Card -->
+                <div class="lg:col-span-5 bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
+                    <div class="text-center border-b border-slate-100 pb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Estimasi Penerimaan SHU Anda</span>
+                        <h3 id="res-total-shu" class="text-3xl sm:text-4xl font-extrabold text-kdmp-red mt-1">Rp 1.140.000</h3>
+                        <p class="text-xs text-emerald-600 font-semibold mt-1 flex items-center justify-center gap-1">
+                            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> Perkiraan dividen & imbalan transaksi tahunan
+                        </p>
+                    </div>
+
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg">
+                            <span class="text-slate-600 font-medium">SHU Jasa Modal (Simpanan)</span>
+                            <span id="res-jasa-modal" class="font-bold text-slate-900">Rp 240.000</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg">
+                            <span class="text-slate-600 font-medium">SHU Jasa Belanja & Saprotan</span>
+                            <span id="res-jasa-belanja" class="font-bold text-slate-900">Rp 360.000</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg">
+                            <span class="text-slate-600 font-medium">Bonus Serap Gabah/Hasil Tani</span>
+                            <span id="res-jasa-tani" class="font-bold text-slate-900">Rp 540.000</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-amber-50 p-3 rounded-lg border border-amber-200 text-amber-900">
+                            <span class="font-semibold text-xs">Total Tabungan Terakumulasi (1 Thn)</span>
+                            <span id="res-total-simpanan" class="font-extrabold">Rp 700.000</span>
+                        </div>
+                    </div>
+
+                    <a href="#pendaftaran" class="block w-full py-3 bg-kdmp-red hover:bg-kdmp-darkred text-white text-center font-bold rounded-xl shadow transition">
+                        Daftar Anggota Sekarang
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 6: PORTAL ASPIRASI WARGA & PENDAFTARAN ANGGOTA ONLINE -->
+    <section id="pendaftaran" class="py-16 sm:py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-kdmp-red bg-red-50 px-3 py-1 rounded-full border border-red-100">
+                    Layanan Mandiri Warga Klepek
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">
+                    Pendaftaran Anggota & Papan Aspirasi Warga
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Mari bersama membesarkan KDMP Klepek. Daftarkan diri Anda sebagai anggota resmi atau kirimkan usulan unit usaha baru.
+                </p>
+            </div>
+
+            <!-- Tab Buttons Header -->
+            <div class="flex justify-center border-b border-slate-200">
+                <div class="inline-flex p-1 bg-slate-200 rounded-xl space-x-1">
+                    <button id="tab-btn-daftar" onclick="switchTab('daftar')" class="px-5 py-2.5 rounded-lg text-sm font-bold bg-white text-kdmp-red shadow transition-all">
+                        <i data-lucide="user-plus" class="w-4 h-4 inline mr-1"></i> Form Pendaftaran Anggota
+                    </button>
+                    <button id="tab-btn-aspirasi" onclick="switchTab('aspirasi')" class="px-5 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-slate-900 transition-all">
+                        <i data-lucide="message-square-plus" class="w-4 h-4 inline mr-1"></i> Usul Ide & Aspirasi Warga
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT 1: PENDAFTARAN ANGGOTA & KTA DIGITAL -->
+            <div id="tab-content-daftar" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Registration Form -->
+                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+                    <h3 class="font-bold text-xl text-slate-900 flex items-center gap-2">
+                        <i data-lucide="clipboard-edit" class="w-5 h-5 text-kdmp-red"></i>
+                        <span>Formulir Keanggotaan Perdana KDMP Klepek</span>
+                    </h3>
+
+                    <form id="form-registrasi" onsubmit="handleRegistration(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap (Sesuai KTP)</label>
+                                <input type="text" id="reg-nama" required placeholder="Contoh: Budi Santoso" 
+                                    oninput="updateCardPreview()"
+                                    class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-kdmp-red focus:border-kdmp-red outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">NIK (16 Digit)</label>
+                                <input type="text" id="reg-nik" required maxlength="16" placeholder="3506..." 
+                                    oninput="updateCardPreview()"
+                                    class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-kdmp-red focus:border-kdmp-red outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Dusun / RT / RW</label>
+                                <select id="reg-dusun" onchange="updateCardPreview()" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-kdmp-red focus:border-kdmp-red outline-none">
+                                    <option value="Dsn. Klepek Krajan">Dsn. Klepek Krajan</option>
+                                    <option value="Dsn. Santren">Dsn. Santren</option>
+                                    <option value="Dsn. Sumberjo">Dsn. Sumberjo</option>
+                                    <option value="Dsn. Kunjang Barat">Dsn. Kunjang Barat</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Nomor WhatsApp / HP</label>
+                                <input type="tel" id="reg-hp" required placeholder="089684805256" 
+                                    class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-kdmp-red focus:border-kdmp-red outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Mata Pencaharian Utama</label>
+                            <select id="reg-pekerjaan" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-kdmp-red focus:border-kdmp-red outline-none">
+                                <option value="Petani Padi / Palawija">Petani Padi / Palawija</option>
+                                <option value="Peternak / Perikanan">Peternak / Perikanan</option>
+                                <option value="Pelaku UMKM / Pedagang">Pelaku UMKM / Pedagang</option>
+                                <option value="Karyawan / Buruh Tani">Karyawan / Buruh Tani</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+
+                        <div class="p-3 bg-red-50 border border-red-100 rounded-lg text-xs text-slate-600 space-y-1">
+                            <span class="font-bold text-kdmp-red">Ketentuan Simpanan Awal:</span>
+                            <ul class="list-disc list-inside space-y-0.5">
+                                <li>Simpanan Pokok: Rp 100.000 (Dibayar 1x saat pendaftaran)</li>
+                                <li>Simpanan Wajib: Rp 20.000 / bulan</li>
+                            </ul>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-kdmp-red hover:bg-kdmp-darkred text-white font-bold rounded-xl shadow hover:shadow-lg transition flex items-center justify-center gap-2">
+                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            <span>Kirim Pendaftaran Keanggotaan</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Digital Card Live Preview -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-slate-900 text-sm">Preview Kartu Tanda Anggota (KTA) Digital</h4>
+                        <span class="text-xs text-slate-400">Generated Live</span>
+                    </div>
+
+                    <!-- KTA Card Design -->
+                    <div class="gradient-hero rounded-2xl p-6 text-white shadow-xl relative overflow-hidden border border-white/20 space-y-6">
+                        <div class="absolute -right-8 -bottom-8 w-36 h-36 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+
+                        <!-- Card Header -->
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-lg bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xs">
+                                    KDMP
+                                </div>
+                                <div>
+                                    <p class="font-extrabold text-xs tracking-wider">KDMP KLEPEK</p>
+                                    <p class="text-[9px] text-red-200">KABUPATEN KEDIRI</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500 text-white text-[9px] font-bold uppercase">ANGGOTA AKTIF</span>
+                        </div>
+
+                        <!-- Card Details -->
+                        <div class="space-y-3 pt-2">
+                            <div>
+                                <p class="text-[9px] text-red-200 uppercase font-semibold">Nama Anggota</p>
+                                <p id="card-nama" class="font-extrabold text-lg text-white tracking-wide">Budi Santoso</p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div>
+                                    <p class="text-[9px] text-red-200 uppercase font-semibold">ID Anggota / NIK</p>
+                                    <p id="card-nik" class="font-mono font-medium text-red-100">3506123456780001</p>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] text-red-200 uppercase font-semibold">Wilayah Dusun</p>
+                                    <p id="card-dusun" class="font-medium text-red-100">Dsn. Klepek Krajan</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="flex justify-between items-end border-t border-white/20 pt-3">
+                            <div>
+                                <p class="text-[9px] text-red-200">Terdaftar Per:</p>
+                                <p class="text-xs font-bold text-amber-300">November 2026</p>
+                            </div>
+                            <div class="bg-white p-1 rounded">
+                                <!-- Dummy QR Code visual -->
+                                <div class="w-10 h-10 bg-slate-900 rounded flex items-center justify-center text-[7px] text-white font-mono text-center">
+                                    KDMP<br>QR
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-2 text-center">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600 mx-auto"></i>
+                        <p>Kartu digital ini akan aktif otomatis setelah diverifikasi oleh Tim Sekretariat KDMP Klepek.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB CONTENT 2: PAPAN ASPIRASI WARGA -->
+            <div id="tab-content-aspirasi" class="hidden space-y-8">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- Form Aspirasi -->
+                    <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                            <i data-lucide="lightbulb" class="w-5 h-5 text-amber-500"></i>
+                            <span>Kirimkan Usulan Unit Usaha</span>
+                        </h3>
+                        <p class="text-xs text-slate-500">Punya ide usaha komoditas, alat pertanian, atau layanan baru di Desa Klepek?</p>
+
+                        <form id="form-aspirasi" onsubmit="handleAspirationSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Nama Warga / Kelompok Tani</label>
+                                <input type="text" id="asp-nama" required placeholder="Contoh: Pak Supardi (Poktan Tani Makmur)" 
+                                    class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-kdmp-red outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Kategori Usulan</label>
+                                <select id="asp-kategori" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-kdmp-red outline-none">
+                                    <option value="Pertanian & Alat Tani">Pertanian & Alat Tani</option>
+                                    <option value="Peternakan & Pakan">Peternakan & Pakan</option>
+                                    <option value="Gerai Sembako Warga">Gerai Sembako Warga</option>
+                                    <option value="Pengolahan / Hilirisasi Pangan">Pengolahan / Hilirisasi Pangan</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Detail Ide / Usulan Usaha</label>
+                                <textarea id="asp-detail" rows="4" required placeholder="Jelaskan gagasan Anda secara singkat..." 
+                                    class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-kdmp-red outline-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow transition flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Kirim Ide ke Papan Aspirasi</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Live Aspirations List Board -->
+                    <div class="lg:col-span-7 space-y-4">
+                        <h3 class="font-bold text-lg text-slate-900 flex items-center justify-between">
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="message-square" class="w-5 h-5 text-kdmp-red"></i>
+                                <span>Papan Aspirasi & Ide Masuk Warga</span>
+                            </span>
+                            <span id="asp-count" class="text-xs bg-red-100 text-kdmp-red px-2.5 py-0.5 rounded-full font-bold">3 Ide</span>
+                        </h3>
+
+                        <div id="aspirasi-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-1 custom-scrollbar">
+                            
+                            <!-- Sample 1 -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <span class="font-bold text-sm text-slate-900">Poktan Santren Asri</span>
+                                        <span class="text-xs text-slate-400 block">Dsn. Santren • 2 hari lalu</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded">Pertanian & Alat Tani</span>
+                                </div>
+                                <p class="text-xs text-slate-700 leading-relaxed">
+                                    "Usul pengadaan mesin Combine Harvester milik KDMP agar biaya panen padi warga bisa lebih murah dibandingkan sewa dari pihak luar."
+                                </p>
+                                <div class="flex items-center gap-2 text-xs text-emerald-600 font-semibold pt-1 border-t border-slate-100">
+                                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Status: Masuk Agenda Draf Kerja Q1 2027
+                                </div>
+                            </div>
+
+                            <!-- Sample 2 -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <span class="font-bold text-sm text-slate-900">Ibu Sri Rahayu</span>
+                                        <span class="text-xs text-slate-400 block">Dsn. Klepek Krajan • 5 hari lalu</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 bg-blue-100 text-blue-800 rounded">Gerai Sembako Warga</span>
+                                </div>
+                                <p class="text-xs text-slate-700 leading-relaxed">
+                                    "Mohon disediakan paket sembako murah bulanan khusus untuk anggota koperasi yang bisa diangsur atau dibayar saat musim panen tiba."
+                                </p>
+                                <div class="flex items-center gap-2 text-xs text-emerald-600 font-semibold pt-1 border-t border-slate-100">
+                                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Status: Disetujui dalam Pilar 2 Usaha
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER INFORMASIF -->
+    <footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                
+                <div class="space-y-3 md:col-span-2">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-lg bg-kdmp-red text-white flex items-center justify-center font-bold">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-amber-300"></i>
+                        </div>
+                        <span class="font-extrabold text-lg text-white">KDMP KLEPEK KUNJANG</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Koperasi Desa Merah Putih (KDMP) Klepek, Kecamatan Kunjang, Kabupaten Kediri, Jawa Timur. Wadahgotong royong resmi di bawah binaan PT Agrinas Pangan Nusantara & Kementerian Koperasi Republik Indonesia.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Sekretariat Resmi</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-kdmp-red shrink-0 mt-0.5"></i>
+                            <span>Gedung KDMP Klepek, Jl. Raya Desa Klepek, Kec. Kunjang, Kab. Kediri, Jawa Timur 64156</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="phone" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                            <span>Layanan Warga: 0896-8480-5256</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Jam Operasional</h4>
+                    <p class="text-xs text-slate-400">
+                        Senin - Sabtu: 08:00 - 15:00 WIB<br>
+                        Minggu & Hari Libur Nasional: Tutup
+                    </p>
+                    <div class="pt-2">
+                        <span class="inline-flex items-center px-2.5 py-1 rounded text-[11px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span> Pelayanan Aktif
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <p>© 2026 Management KDMP Klepek • PT Agrinas Pangan Nusantara • Kementerian Koperasi RI.</p>
+                <div class="flex space-x-4">
+                    <a href="#visi-misi" class="hover:text-white">Visi Misi</a>
+                    <a href="#dashboard" class="hover:text-white">Dashboard</a>
+                    <a href="#roadmap" class="hover:text-white">Roadmap</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- SUCCESS NOTIFICATION TOAST -->
+    <div id="toast-notif" class="fixed bottom-5 right-5 z-50 transform translate-y-32 opacity-0 transition-all duration-300 max-w-sm bg-slate-900 text-white p-4 rounded-xl shadow-2xl border border-slate-700 flex items-start gap-3">
+        <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg">
+            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+        </div>
+        <div>
+            <h4 id="toast-title" class="font-bold text-sm text-white">Berhasil!</h4>
+            <p id="toast-msg" class="text-xs text-slate-300 mt-0.5">Data pendaftaran berhasil tersimpan.</p>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Initialize Dynamic Visual Charts via Chart.js
+        window.addEventListener('load', () => {
+            initDivisionChart();
+            initCommodityChart();
+            calculateSHU(); // Run initial SHU calculation
+        });
+
+        function initDivisionChart() {
+            const ctx = document.getElementById('divisionProgressChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Kelembagaan', 'Manajemen SDM', 'Potensi Komoditas', 'Fisik Gerai', 'Digitalisasi'],
+                    datasets: [{
+                        label: 'Persentase Kesiapan (%)',
+                        data: [100, 100, 85, 60, 50],
+                        backgroundColor: [
+                            '#059669',
+                            '#2563EB',
+                            '#D97706',
+                            '#B91C1C',
+                            '#64748B'
+                        ],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) { return value + '%'; }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initCommodityChart() {
+            const ctx = document.getElementById('commodityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Padi Gabah Dry', 'Jagung Komersial', 'Hortikultura / Cabai', 'Peternakan / Telur'],
+                    datasets: [{
+                        data: [55, 25, 12, 8],
+                        backgroundColor: [
+                            '#B91C1C',
+                            '#D97706',
+                            '#059669',
+                            '#3B82F6'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 12, font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // SHU CALCULATOR INTERACTIVE LOGIC
+        const inputSimpananWajib = document.getElementById('input-simpanan-wajib');
+        const inputBelanja = document.getElementById('input-belanja');
+        const inputHasilTani = document.getElementById('input-hasil-tani');
+
+        const valSimpananWajib = document.getElementById('val-simpanan-wajib');
+        const valBelanja = document.getElementById('val-belanja');
+        const valHasilTani = document.getElementById('val-hasil-tani');
+
+        const resTotalShu = document.getElementById('res-total-shu');
+        const resJasaModal = document.getElementById('res-jasa-modal');
+        const resJasaBelanja = document.getElementById('res-jasa-belanja');
+        const resJasaTani = document.getElementById('res-jasa-tani');
+        const resTotalSimpanan = document.getElementById('res-total-simpanan');
+
+        function formatRupiah(num) {
+            return 'Rp ' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function calculateSHU() {
+            const wjb = parseInt(inputSimpananWajib.value);
+            const blj = parseInt(inputBelanja.value);
+            const tani = parseInt(inputHasilTani.value);
+
+            valSimpananWajib.textContent = formatRupiah(wjb) + ' / bln';
+            valBelanja.textContent = formatRupiah(blj) + ' / bln';
+            valHasilTani.textContent = formatRupiah(tani) + ' / thn';
+
+            // Assumptions for simulation:
+            // Total simpanan setahun (Pokok 100k + Wajib * 12)
+            const totalSimpanan = 100000 + (wjb * 12);
+            
+            // Jasa Modal (~12% per tahun dari akumulasi simpanan)
+            const jasaModal = Math.round(totalSimpanan * 0.12);
+            
+            // Jasa Belanja (~5% dari total belanja tahunan)
+            const jasaBelanja = Math.round((blj * 12) * 0.05);
+
+            // Jasa Serap Hasil Tani (~0.8% dari total komoditas yang diserap)
+            const jasaTani = Math.round(tani * 0.008);
+
+            const totalSHU = jasaModal + jasaBelanja + jasaTani;
+
+            resJasaModal.textContent = formatRupiah(jasaModal);
+            resJasaBelanja.textContent = formatRupiah(jasaBelanja);
+            resJasaTani.textContent = formatRupiah(jasaTani);
+            resTotalSimpanan.textContent = formatRupiah(totalSimpanan);
+            resTotalShu.textContent = formatRupiah(totalSHU);
+        }
+
+        [inputSimpananWajib, inputBelanja, inputHasilTani].forEach(elem => {
+            elem.addEventListener('input', calculateSHU);
+        });
+
+        // TAB SWITCHING LOGIC FOR REGISTRATION / ASPIRATION
+        function switchTab(tab) {
+            const btnDaftar = document.getElementById('tab-btn-daftar');
+            const btnAspirasi = document.getElementById('tab-btn-aspirasi');
+            const contentDaftar = document.getElementById('tab-content-daftar');
+            const contentAspirasi = document.getElementById('tab-content-aspirasi');
+
+            if (tab === 'daftar') {
+                btnDaftar.className = "px-5 py-2.5 rounded-lg text-sm font-bold bg-white text-kdmp-red shadow transition-all";
+                btnAspirasi.className = "px-5 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-slate-900 transition-all";
+                contentDaftar.classList.remove('hidden');
+                contentAspirasi.classList.add('hidden');
+            } else {
+                btnAspirasi.className = "px-5 py-2.5 rounded-lg text-sm font-bold bg-white text-kdmp-red shadow transition-all";
+                btnDaftar.className = "px-5 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-slate-900 transition-all";
+                contentAspirasi.classList.remove('hidden');
+                contentDaftar.classList.add('hidden');
+            }
+        }
+
+        // UPDATE KTA CARD PREVIEW IN REAL-TIME
+        function updateCardPreview() {
+            const nama = document.getElementById('reg-nama').value;
+            const nik = document.getElementById('reg-nik').value;
+            const dusun = document.getElementById('reg-dusun').value;
+
+            document.getElementById('card-nama').textContent = nama.trim() !== '' ? nama : 'Budi Santoso';
+            document.getElementById('card-nik').textContent = nik.trim() !== '' ? nik : '3506123456780001';
+            document.getElementById('card-dusun').textContent = dusun;
+        }
+
+        // HANDLE FORM SUBMISSION (REGISTRATION)
+        function handleRegistration(e) {
+            e.preventDefault();
+            const nama = document.getElementById('reg-nama').value;
+            showToast('Pendaftaran Berhasil!', `Selamat ${nama}, formulir Anda telah diterima oleh Tim KDMP Klepek.`);
+            document.getElementById('form-registrasi').reset();
+            updateCardPreview();
+        }
+
+        // HANDLE FORM SUBMISSION (ASPIRATION)
+        let countAspirasi = 2;
+        function handleAspirationSubmit(e) {
+            e.preventDefault();
+            const nama = document.getElementById('asp-nama').value;
+            const kategori = document.getElementById('asp-kategori').value;
+            const detail = document.getElementById('asp-detail').value;
+
+            const listContainer = document.getElementById('aspirasi-list');
+
+            const newItemHtml = `
+                <div class="bg-white p-4 rounded-xl border border-red-200 shadow-sm space-y-2 animate-fade-in">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="font-bold text-sm text-slate-900">${nama}</span>
+                            <span class="text-xs text-slate-400 block">Baru saja</span>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 bg-red-100 text-kdmp-red rounded">${kategori}</span>
+                    </div>
+                    <p class="text-xs text-slate-700 leading-relaxed">
+                        "${detail}"
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-amber-600 font-semibold pt-1 border-t border-slate-100">
+                        <i data-lucide="clock" class="w-3.5 h-3.5"></i> Status: Menunggu Penelaahan Pengurus
+                    </div>
+                </div>
+            `;
+
+            listContainer.insertAdjacentHTML('afterbegin', newItemHtml);
+            countAspirasi++;
+            document.getElementById('asp-count').textContent = `${countAspirasi} Ide`;
+
+            lucide.createIcons();
+            showToast('Aspirasi Terkirim!', 'Terima kasih atas kontribusi gagasan Anda untuk kemajuan Desa Klepek.');
+            document.getElementById('form-aspirasi').reset();
+        }
+
+        // CUSTOM TOAST NOTIFICATION
+        function showToast(title, message) {
+            const toast = document.getElementById('toast-notif');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-msg').textContent = message;
+
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
